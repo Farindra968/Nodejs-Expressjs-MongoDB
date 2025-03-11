@@ -373,18 +373,43 @@ src/
 
 ### `src/app.js`
 ```javascript
-const express = require('express');
-const productRoutes = require('./route/productroute.js');
+import { configDotenv } from 'dotenv';
+import express from 'express';
+import productRoute from './routes/productRoute.js';
+import bodyParser from 'body-parser';
+import connectDB from './config/database.js';
+
+configDotenv();
 
 const app = express();
-app.use(express.json());
 
-app.use('/api/products', productRoutes);
+// connection mongose database
+connectDB();
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// parse application/json
+app.use(bodyParser.json())
+
+// importing port from .env file
+const port = process.env.PORT;
+
+app.get('/', (req, res) => {
+    res.json({
+        "name": "Backend",
+        "version": "v1.0.0",
+        "status": port,
+        "developer": "Farindra Bhandari"
+    })
+})
+
+/// 'api/products - Product 
+app.use('/api/products', productRoute)
+
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`)
+})
 ```
 ### `src/config/database.js`
 ``` javascript
