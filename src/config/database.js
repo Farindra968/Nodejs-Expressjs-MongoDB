@@ -4,7 +4,7 @@ import mongoose from "mongoose"
 const connectDB = async () => {
   try {
     // Using the correct environment variable name
-    const status = await mongoose.connect('mongodb://127.0.0.1:27017/nodejs')
+    const status = await mongoose.connect(process.env.MONGOOSE_URL)
     console.log(`Database connection successful at ${status.connection.host}`)
     return status
   } catch (error) {

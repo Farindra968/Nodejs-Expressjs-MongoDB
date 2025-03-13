@@ -23,4 +23,9 @@ const deleteProductbyId = async (id) => {
   return await Product.findByIdAndDelete(id); // deleting user by user id
 };
 
-export default { getAllProduct, getProductbyID, addProduct, deleteProductbyId };
+/// Update Product (put method)
+const updateProduct = async (id, data) => {
+  return await Product.findByIdAndUpdate(id, data)
+}
+
+export default { getAllProduct, getProductbyID, addProduct, deleteProductbyId, updateProduct };
