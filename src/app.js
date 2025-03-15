@@ -2,12 +2,15 @@ import { configDotenv } from 'dotenv';
 import express from 'express';
 import productRoute from './routes/productRoute.js';
 import userRoute from './routes/userRoute.js'
+import authRouter from './routes/authRoutes.js'
 import bodyParser from 'body-parser';
 import connectDB from './config/database.js';
 
 configDotenv();
 
 const app = express();
+
+
 
 // connection mongose database
 connectDB();
@@ -19,6 +22,8 @@ app.use(bodyParser.json())
 
 // importing port from .env file
 const port = process.env.PORT;
+
+// simple middlewares 
 
 app.get('/', (req, res) => {
     res.json({
@@ -34,6 +39,9 @@ app.use('/api/products', productRoute)
 
 /// 'api/users - User
 app.use('/api/users', userRoute)
+
+// 'api/auth/login
+app.use('/api/auth/', authRouter)
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
