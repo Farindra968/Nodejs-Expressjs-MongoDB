@@ -12,4 +12,13 @@ const login = async (req, res) => {
     }
 };
 
-export {login}
+const register = async (req, res) => {
+    try {
+        const registerUser = await authServices.register(req.body)
+        res.json(registerUser)
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
+
+export {login, register}

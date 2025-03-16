@@ -6,6 +6,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: Number,
+    unique: true,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -35,6 +40,7 @@ const UserSchema = new Schema({
   address: {
     city: {
       type: String,
+      required: true
     },
     country: {
       type: String,
