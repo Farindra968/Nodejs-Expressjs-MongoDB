@@ -26,12 +26,7 @@ const UserSchema = new Schema({
     type: String,
     trim: true,
     required: true,
-    validate: {
-      validator: (password) => {
-        return PASSWORD_REGEX.test(password);
-      },
-      message: "Passwrd must contain Number, character and special character ",
-    },
+
   },
   role: {
     type: [String],
