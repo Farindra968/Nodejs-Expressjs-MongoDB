@@ -4,8 +4,15 @@ import authServices from "../service/authServices.js";
 const login = async (req, res) => {
   /// try catch to handel errors
   try {
+    const { email, phone, password } = req.body;
+
+    /// show error message if email or phone is not enter while login
+    if (!email && !phone) return res.status(422).send("Email Password is required")
+    
+    /// show error message if pssword is not enter while login
+    if (!password) return res.status(422).send("Passwrd is required");
+
     const login = await authServices.login(req.body);
-    res.cookie("userId", login._id); /// kepping user id in cookie
     res.json(login);
   } catch (error) {
     res.status(500).send(error.message);
@@ -17,6 +24,7 @@ const register = async (req, res) => {
     ///
     const { name, phone, email, confirmapassword, password, address } =
       req.body;
+    
     // if name not insert while registering
     if (!name) return res.status(422).send("Name is required.");
     // if phone not insert while registering
@@ -25,6 +33,8 @@ const register = async (req, res) => {
     if (!email) return res.status(422).send("Email Address is required");
     // if password not insert while registering
     if (!password) return res.status(422).send("Password is required");
+    // if password not insert while registering
+    if (!confirmapassword) return res.status(422).send("Confirm Password is required");
     // if address city not insert while registering
     if (!address?.city) return res.status(422).send("City is required");
 
