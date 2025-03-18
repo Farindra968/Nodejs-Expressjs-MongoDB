@@ -1,6 +1,7 @@
 import { PASSWORD_REGEX } from "../constant/regex.js";
 import userDataFormatter from "../helpers/userDataFormatter.js";
 import authServices from "../service/authServices.js";
+import jsonToken from "../utils/jwtToken.js";
 
 const login = async (req, res) => {
   /// try catch to handel errors
@@ -14,7 +15,14 @@ const login = async (req, res) => {
     if (!password) return res.status(422).send("Passwrd is required");
 
     const data = await authServices.login(req.body);
-    res.json(userDataFormatter(data));
+
+    const formateData = userDataFormatter(data)
+    
+    //jwt token;
+    const jwttoken = jsonToken(formateData);
+
+    console.log(jwttoken)
+    res.json(formateData);
   } catch (error) {
     res.status(500).send(error.message);
   }

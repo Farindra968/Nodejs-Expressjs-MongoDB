@@ -7,16 +7,17 @@ const login = async (data) => {
     $or: [{ email: data.email }, { phone: data.phone }],
   });
 
+  
+  // if user email or phone  not match with database then;
+  if (!users) throw { statusCode: 404, message: "User  not found" };
+  return users;
+
   // comparing database hase password with user password for validation
   const comparePassword = bcrypt.compareSync(data.password, users.password);
 
   // if user password not match with database database has password then;
   if (!comparePassword)
     throw { statusCode: 404, message: "Incorrect email, phone or password" };
-
-  // if user email or phone  not match with database then;
-  if (!users) throw { statusCode: 404, message: "User  not found" };
-  return users;
 };
 
 /// Register Services
