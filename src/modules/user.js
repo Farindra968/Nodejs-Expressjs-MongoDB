@@ -8,13 +8,13 @@ const UserSchema = new Schema({
   },
   phone: {
     type: Number,
-    unique: true,
+    unique: [true, "Phone Number Already Exist"],
     required: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: [true, "Email Already Exist"],
     validate: {
       validator: (email) => {
         return EMAIL_REGX.test(email);

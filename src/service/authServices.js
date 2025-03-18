@@ -22,13 +22,6 @@ const login = async (data) => {
 /// Register Services
 const register = async (data) => {
   const hassPassword = bcrypt.hashSync(data.password);
-  // check user through email address
-  const users = await Users.findOne({
-    email: data.email,
-  });
-
-  // show message if users already exist
-  if (!users)  throw { statusCode: 404, message: "User Already exist" };
 
   const signup = await Users.create({
     name: data.name,

@@ -44,7 +44,7 @@ const deleteUser = async (req, res) => {
   // try catch for handeling error
   try {
     const user = await userServices.deleteUser(id);
-    res.send("User Delete Sucessfully");
+    res.json(user);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -57,7 +57,7 @@ const updaeUser = async (req, res) => {
   // try catch for handeling error
   try {
     const user = await userServices.updateUser(id, req.body);
-    res.send("User data update sucessfully");
+    res.json(user);
   } catch (error) {
     res.status(500).send(error.message);
   }
