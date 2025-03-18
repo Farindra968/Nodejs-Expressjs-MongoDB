@@ -1,4 +1,5 @@
 import { PASSWORD_REGEX } from "../constant/regex.js";
+import userDataFormatter from "../helpers/userDataFormatter.js";
 import authServices from "../service/authServices.js";
 
 const login = async (req, res) => {
@@ -12,8 +13,8 @@ const login = async (req, res) => {
     /// show error message if pssword is not enter while login
     if (!password) return res.status(422).send("Passwrd is required");
 
-    const login = await authServices.login(req.body);
-    res.json(login);
+    const data = await authServices.login(req.body);
+    res.json(userDataFormatter(data));
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -50,8 +51,8 @@ const register = async (req, res) => {
           "Password must contain uppercase, lowercase, number and special character."
         );
 
-    const registerUser = await authServices.register(req.body);
-    res.json(registerUser);
+    const data = await authServices.register(req.body);
+    res.json(userDataFormatter(data));
   } catch (error) {
     res.status(500).send(error.message);
   }
