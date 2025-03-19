@@ -1,7 +1,7 @@
 import { PASSWORD_REGEX } from "../constant/regex.js";
 import userDataFormatter from "../helpers/userDataFormatter.js";
 import authServices from "../service/authServices.js";
-import jsonToken from "../utils/jwtToken.js";
+import {jsonToken} from "../utils/jwtToken.js";
 
 const login = async (req, res) => {
   /// try catch to handel errors
@@ -21,7 +21,11 @@ const login = async (req, res) => {
     //jwt token;
     const jwttoken = jsonToken(formateData);
 
+    //
     console.log(jwttoken)
+
+    // saving jwt token in cookie
+    res.cookie("authToken", jwttoken)
     res.json(formateData);
   } catch (error) {
     res.status(500).send(error.message);

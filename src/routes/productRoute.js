@@ -1,6 +1,5 @@
 import express from 'express';
 import { deleteProductByID, getAllProduct, getProductbyId, postProduct, updateProductbyID } from '../controller/productController.js';
-import logger from '../middlewares/logger.js';
 const router = express.Router();
 
 /// C R U D
@@ -10,18 +9,18 @@ router.get('/', getAllProduct)
 
 
 // Method: Get [Get Product by ID]
-router.get('/:id', logger, getProductbyId)
+router.get('/:id',  getProductbyId)
 
 
 // Method: Post [Create Products]
-router.post('/', logger, postProduct)
+router.post('/',  postProduct)
 
 
 // Method: Delete [Delete Products] 
-router.delete('/:id',logger, deleteProductByID)
+router.delete('/:id', deleteProductByID)
 
 
 // Method: Put [Update Products] 
-router.put('/:id', logger, updateProductbyID)
+router.put('/:id',  updateProductbyID)
 
 export default router;
