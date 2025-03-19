@@ -1,26 +1,30 @@
 import express from 'express';
 import { createUser, deleteUser, getAllUser, getUserbyID, updaeUser } from '../controller/userController.js';
 import authMiddlewares from '../middlewares/authMiddlewares.js';
+import roleBasedAuth from '../middlewares/roleBasedAuth.js';
+import { ADMIN_ROLE } from '../constant/role.js';
 
 const router = express.Router();
 
 // Method Get | get user data
-router.get('/', getAllUser); 
-router.post('/test', authMiddlewares, (req, res) => {
-    res.send('Test authToken is valid');
-});
+// [authMiddlewares, roleBasedAuth(ADMIN_ROLE)] user data can be access by only admin
+router.get('/', [authMiddlewares, roleBasedAuth(ADMIN_ROLE)], getAllUser); 
 
 
 /// Method Get | Get single user data
-router.get('/:id', getUserbyID)
+// [authMiddlewares, roleBasedAuth(ADMIN_ROLE)] user data can be access by only admin
+router.get('/:id', [authMiddlewares, roleBasedAuth(ADMIN_ROLE)], getUserbyID)
 
 /// Method Post | Add User data
-router.post('/', createUser)
+// [authMiddlewares, roleBasedAuth(ADMIN_ROLE)] user data can be access by only admin
+router.post('/', [authMiddlewares, roleBasedAuth(ADMIN_ROLE)], createUser)
 
 /// Method put | Update Userdata
-router.put('/:id', updaeUser)
+// [authMiddlewares, roleBasedAuth(ADMIN_ROLE)] user data can be access by only admin
+router.put('/:id', [authMiddlewares, roleBasedAuth(ADMIN_ROLE)], updaeUser)
 
 /// Method delete | Delete user data
-router.delete('/:id', deleteUser)
+// [authMiddlewares, roleBasedAuth(ADMIN_ROLE)] user data can be access by only admin
+router.delete('/:id', [authMiddlewares, roleBasedAuth(ADMIN_ROLE)], deleteUser)
 
 export default router;
