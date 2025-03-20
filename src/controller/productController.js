@@ -17,10 +17,10 @@ const getProductbyId = async (req, res) => {
 
   // try catch for handeling error
   try {
-    const product = await productServices.getProductbyID(id); // finding single product by id
+    const product = await productServices.getProductbyID(id);
 
-    //if product not found
-    if (!product) res.status(404).send("Sorry, Product Not Found");
+    if (!product){ return res.status(404).send("Product not found.");}
+
     res.json(product);
   } catch (error) {
     res.status(500).send(error.message);
@@ -29,10 +29,14 @@ const getProductbyId = async (req, res) => {
 
 // Method Post (Create) Product
 const postProduct = async (req, res) => {
+  // extracting user id from req.user (jwt token: authMiddlewares)
+  const userID = req.user.id;
+  console.log(userID);
+  
   // try catch for handeling error
   try {
     // Calls the addProduct function from productServices with request body data
-    const data = await productServices.addProduct(req.body);
+    const data = await productServices.addProduct(req.body, userID);
 
     // Sends the response with the added product data
     res.send(data);
@@ -48,6 +52,7 @@ const deleteProductByID = (req, res) => {
 
   // try catch for handeling error
   try {
+
     const data = productServices.deleteProductbyId(id);
     console.log("Product Deleted Successfully");
   } catch (error) {

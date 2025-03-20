@@ -36,7 +36,7 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   try {
     ///
-    const { name, phone, email, confirmapassword, password, address } =
+    const { name, phone, email, confirmpassword, password, address } =
       req.body;
 
     // if name not insert while registering
@@ -48,13 +48,13 @@ const register = async (req, res) => {
     // if password not insert while registering
     if (!password) return res.status(422).send("Password is required");
     // if password not insert while registering
-    if (!confirmapassword)
+    if (!confirmpassword)
       return res.status(422).send("Confirm Password is required");
     // if address city not insert while registering
     if (!address?.city) return res.status(422).send("City is required");
 
     // checking or matching confirm Password and password
-    if (confirmapassword != password)
+    if (confirmpassword != password)
       return res.status(422).send("Pasword does not match");
 
     // PASSWORD REGEX validation

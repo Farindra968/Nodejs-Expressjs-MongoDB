@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { EMAIL_REGX, PASSWORD_REGEX } from "../constant/regex.js";
-import { ADMIN_ROLE, USER_ROLE } from "../constant/role.js";
+import { ADMIN_ROLE, MERCHET_ROLE, USER_ROLE } from "../constant/role.js";
 
 const UserSchema = new Schema({
   name: {
@@ -32,7 +32,7 @@ const UserSchema = new Schema({
   role: {
     type: [String],
     default: [USER_ROLE],
-    enum: [ADMIN_ROLE, USER_ROLE]
+    enum: [ USER_ROLE,  MERCHET_ROLE, ADMIN_ROLE]
   },
   address: {
     city: {

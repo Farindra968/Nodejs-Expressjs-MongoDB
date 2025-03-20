@@ -13,8 +13,16 @@ const getProductbyID = async (id) => {
 };
 
 /// Add product (Post Method)
-const addProduct = async (data) => {
-  const productData = await Product.create(data);
+const addProduct = async (data, userID) => {
+  const productData = await Product.create({
+    name: data.name,
+    price: data.price,
+    category: data.category,
+    stock: data.stock,
+    brand: data.brand,
+    images: data.images,
+    createdBy: userID,
+  });
   return productData;
 };
 

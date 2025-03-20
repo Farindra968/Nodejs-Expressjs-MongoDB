@@ -29,6 +29,15 @@ const ProductSchema = new Schema({
         type: [String],
         required: true,
         min: 1,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
     }
 });
 

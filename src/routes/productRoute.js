@@ -2,7 +2,7 @@ import express from 'express';
 import { deleteProductByID, getAllProduct, getProductbyId, postProduct, updateProductbyID } from '../controller/productController.js';
 import authMiddlewares from '../middlewares/authMiddlewares.js';
 import roleBasedAuth from '../middlewares/roleBasedAuth.js';
-import { ADMIN_ROLE } from '../constant/role.js';
+import { ADMIN_ROLE, MERCHET_ROLE } from '../constant/role.js';
 const router = express.Router();
 
 /// C R U D
@@ -16,15 +16,17 @@ router.get('/:id',  getProductbyId)
 
 
 // Method: Post [Create Products]
-router.post('/',  postProduct)
+// [authMiddlewares,  product can be add by only admin and merchent
+router.post('/',  authMiddlewares, roleBasedAuth(MERCHET_ROLE), postProduct)
 
 
 // Method: Delete [Delete Products] 
-// [authMiddlewares, roleBasedAuth(ADMIN_ROLE)] product can be deleted by only admin
-router.delete('/:id',[authMiddlewares, roleBasedAuth(ADMIN_ROLE)], deleteProductByID)
+// [authMiddlewares, product can be deleted by only admin
+router.delete('/:id',authMiddlewares, roleBasedAuth(ADMIN_ROLE), deleteProductByID)
 
 
 // Method: Put [Update Products] 
-router.put('/:id',  updateProductbyID)
+// [authMiddlewares,  product can be deleted by only admin and merchent
+router.put('/:id', authMiddlewares, roleBasedAuth(MERCHET_ROLE), updateProductbyID)
 
 export default router;
