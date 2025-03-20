@@ -1,3 +1,4 @@
+import { ADMIN_ROLE } from "../constant/role.js";
 import userServices from "../service/userServices.js";
 
 /// Get all Users data
@@ -54,10 +55,12 @@ const deleteUser = async (req, res) => {
 const updaeUser = async (req, res) => {
   const { id } = req.params;
 
+
   // try catch for handeling error
   try {
-    const user = await userServices.updateUser(id, req.body);
-    res.json(user);
+
+    const data = await userServices.updateUser(id, req.body);
+    res.json(data);
   } catch (error) {
     res.status(500).send(error.message);
   }

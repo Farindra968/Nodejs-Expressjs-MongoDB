@@ -5,11 +5,9 @@ const authMiddlewares = (req, res, next) => {
 
   if (!cookie) return res.status(401).send("User not authenticate");
     const authToken = cookie.split("=")[1];
-    console.log(authToken)
   verifyJwtToken(authToken)
     .then((data) => {
         req.user = data;
-        console.log(data)
       next();
     })
     .catch(() => {

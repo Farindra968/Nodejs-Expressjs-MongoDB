@@ -24,7 +24,7 @@ const deleteUser = async (id) => {
 
 // updating user data 
 const updateUser = async(id, data) => {
-    const user = await Users.findByIdAndUpdate(id, data);
+    const user = await Users.findByIdAndUpdate(id, data, {new: true});
     return user
 }
 

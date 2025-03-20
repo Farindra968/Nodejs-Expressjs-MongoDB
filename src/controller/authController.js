@@ -23,7 +23,6 @@ const login = async (req, res) => {
     const jwttoken = jsonToken(formateData);
 
     //
-    console.log(jwttoken);
 
     // saving jwt token in cookie
     res.cookie("authToken", jwttoken);
@@ -72,7 +71,6 @@ const register = async (req, res) => {
     const jwttoken = jsonToken(formateData);
 
     //
-    console.log(jwttoken);
 
     // saving jwt token in cookie
     res.cookie("authToken", jwttoken);

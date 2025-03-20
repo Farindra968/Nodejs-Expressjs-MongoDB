@@ -21,7 +21,7 @@ router.post('/', [authMiddlewares, roleBasedAuth(ADMIN_ROLE)], createUser)
 
 /// Method put | Update Userdata
 // [authMiddlewares, roleBasedAuth(ADMIN_ROLE)] user data can be access by only admin
-router.put('/:id', [authMiddlewares, roleBasedAuth(ADMIN_ROLE)], updaeUser)
+router.put('/:id',  updaeUser)
 
 /// Method delete | Delete user data
 // [authMiddlewares, roleBasedAuth(ADMIN_ROLE)] user data can be access by only admin

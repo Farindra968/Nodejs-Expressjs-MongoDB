@@ -9,6 +9,7 @@ const getAllProduct = async () => {
 
 //Get Single Product Data
 const getProductbyID = async (id) => {
+  console.log(id);
   return await Product.findById(id); /// Getting product by id
 };
 
@@ -33,7 +34,9 @@ const deleteProductbyId = async (id) => {
 
 /// Update Product (put method)
 const updateProduct = async (id, data) => {
-  return await Product.findByIdAndUpdate(id, data)
+  return await Product.findByIdAndUpdate(id, data, {
+    new: true,
+  })
 }
 
 export default { getAllProduct, getProductbyID, addProduct, deleteProductbyId, updateProduct };
