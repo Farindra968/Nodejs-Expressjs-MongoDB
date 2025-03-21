@@ -1,33 +1,29 @@
 import Users from '../modules/user.js'
+import { USER_ROLE, MERCHET_ROLE } from '../constant/role.js';
+import bcrypt from 'bcryptjs';
 
-// Get all User data from DB
-const getUserData = async () => {
-    return await Users.find();
+// Create a new Merchant User
+const createMerchantUser = async (data) => {
+    const hassPassword = bcrypt.hashSync(data.password)
+    
+    const user = await Users.create({
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        password: hassPassword,
+        address: data.address,
+        role: [USER_ROLE, MERCHET_ROLE]
+    });
+
+    if (!user) throw new Error('User not created');
+    return user;
 };
 
-/// Get single user data from DB
-const getUserDataById = async (id) => {
-    return await Users.findById(id);
+
+const getUserbyId = async (id) => {
+    const user = await Users.findById(id);
+    if (!user) throw new Error('User not found');
+    return user;
 }
 
-/// Add User data from DB
-const addUser = async (data) => {
-    const userData = await Users.create(data);
-    return userData;
-}
-
-/// delete single User data 
-const deleteUser = async (id) => {
-    const userdelet = await Users.findByIdAndDelete(id);
-    return userdelet;
-}
-
-// updating user data 
-const updateUser = async(id, data) => {
-    const user = await Users.findByIdAndUpdate(id, data, {new: true});
-    return user
-}
-
-
-
-export default { getUserData, addUser, getUserDataById, deleteUser, updateUser };
+export default { createMerchantUser, getUserbyId };
