@@ -57,7 +57,7 @@ const getUserbyId = async (req, res) => {
     if (!data) return res.status(404).send('User not found2');
     console.log(data);
 
-    if (loggedinUser.id != data.id && !data.role.includes(MERCHET_ROLE)) {
+    if (loggedInUser.id != data.id && !data.role.includes(MERCHET_ROLE)) {
       return res.status(403).send('You are not authorized to access this route');
     }
 
