@@ -11,9 +11,9 @@ const getAllProduct = async (req, res) => {
     const product = await productServices.getAllProduct();
 
     // formating the product data
-    const productFormat = productDataFormatter(product);
-
-    res.send(productFormat);
+    const productFormat = product.map((product)=> productDataFormatter(product));
+      
+    res.json(productFormat);
   } catch (error) {
     res.status(500).send(error.message);
   }

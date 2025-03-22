@@ -1,6 +1,7 @@
 import { PASSWORD_REGEX } from "../constant/regex.js";
-import { MERCHET_ROLE } from "../constant/role.js";
 import userServices from "../service/userServices.js";
+import userDataFormatter from '../helpers/userDataFormatter.js'
+import { jsonToken } from "../utils/jwtToken.js";
 
 const createMerchantUser = async (req, res) => {
   try {
@@ -46,25 +47,14 @@ const createMerchantUser = async (req, res) => {
   }
 };
 
-const getUserbyId = async (req, res) => {
-  const id = req.params.id;
 
-  const loggedinUser = req.user;
-
-  console.log(loggedinUser);
+const updateMerchantUser = async (req, res) => {
   try {
-    const data = await userServices.getUserbyId(id);
-    if (!data) return res.status(404).send('User not found2');
-    console.log(data);
-
-    if (loggedInUser.id != data.id && !data.role.includes(MERCHET_ROLE)) {
-      return res.status(403).send('You are not authorized to access this route');
-    }
-
+    const data = await userServices.updateMerchantUser(req.params.id, req.body);
     res.json(data);
   } catch (error) {
-    res.status(500).send(error.message);
+  res.status(error.statusCode || 500).send(error.message);
   }
 }
 
-export  { createMerchantUser, getUserbyId };
+export  { createMerchantUser, updateMerchantUser };
