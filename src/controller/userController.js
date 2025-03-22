@@ -16,6 +16,21 @@ const getAllUser = async(req, res) => {
   }
 }
 
+// Get User By ID 
+const getUserByID = async (req, res) => {
+  const id = req.params.id;
+  // try catch for handeling error
+  try {
+    const user = await userServices.getUserByID(id);
+
+    if (!user) { return res.status(404).send("user not found."); }
+    console.log(user)
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 // Create a new Merchant User
 const createMerchantUser = async (req, res) => {
   try {
@@ -85,4 +100,4 @@ const deteleUser = async (req, res) => {
   }
 }
 
-export  { createMerchantUser, updateUser, getAllUser, deteleUser };
+export  { createMerchantUser, updateUser, getAllUser, getUserByID, deteleUser };
