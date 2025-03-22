@@ -24,8 +24,11 @@ const getUserByID = async (req, res) => {
     const user = await userServices.getUserByID(id);
 
     if (!user) { return res.status(404).send("user not found."); }
-    console.log(user)
-    res.send(user);
+    // Using userDataFormatter to format the user data to avoid sending password
+    const formatedUser = userDataFormatter(user)
+
+    console.log(formatedUser)
+    res.send(formatedUser);
   } catch (error) {
     res.status(500).send(error.message);
   }
