@@ -2,7 +2,21 @@ import { PASSWORD_REGEX } from "../constant/regex.js";
 import userServices from "../service/userServices.js";
 import userDataFormatter from '../helpers/userDataFormatter.js'
 import { jsonToken } from "../utils/jwtToken.js";
+import { ADMIN_ROLE, MERCHET_ROLE } from "../constant/role.js";
 
+
+//Get All User
+const getAllUser = async(req, res) => {
+  try {
+    const user = await userServices.getAllUser();
+    const formatUserData = user.map((user) => userDataFormatter(user))
+    res.json(formatUserData);
+  } catch (error) {
+    res.status(statusCode || 500).send(error.message)
+  }
+}
+
+// Create a new Merchant User
 const createMerchantUser = async (req, res) => {
   try {
     const { name, phone, email, confirmpassword, password, address } = req.body;
@@ -47,14 +61,28 @@ const createMerchantUser = async (req, res) => {
   }
 };
 
-
-const updateMerchantUser = async (req, res) => {
+// Update  User
+const updateUser = async (req, res) => {
+  const id = req.params.id;
   try {
-    const data = await userServices.updateMerchantUser(req.params.id, req.body);
+
+    const data = await userServices.updateUser(id, req.body);
     res.json(data);
   } catch (error) {
-  res.status(error.statusCode || 500).send(error.message);
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+
+// delete user
+const deteleUser = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const user = await userServices.deleteUser(id);
+    res.send("User Deleted Successfully")
+  } catch (error) {
+    res.status(statusCode || 200).send("User Deleted Successfully")
   }
 }
 
-export  { createMerchantUser, updateMerchantUser };
+export  { createMerchantUser, updateUser, getAllUser, deteleUser };
