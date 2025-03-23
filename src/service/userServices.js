@@ -13,6 +13,11 @@ const getAllCustomer = async () => {
     return await Users.find({role: [USER_ROLE]})
 }
 
+// Get All Merchant
+const getAllMerchant = async () => {
+    return await Users.find({role: [MERCHET_ROLE]})
+}
+
 // Get User by ID
 const getUserByID = async (id) => {
     return  await Users.findById(id)
@@ -27,7 +32,7 @@ const createMerchantUser = async (data) => {
         email: data.email,
         password: hassPassword,
         address: data.address,
-        role: [USER_ROLE, MERCHET_ROLE]
+        role: [MERCHET_ROLE]
     });
 
     return user;
@@ -53,4 +58,4 @@ const deleteUser = async (id) => {
     return await Users.findByIdAndDelete(id)
 }
 
-export default {getAllUser, getAllCustomer, createMerchantUser, updateUser, deleteUser, getUserByID };
+export default {getAllUser, getAllCustomer, createMerchantUser, getAllMerchant, updateUser, deleteUser, getUserByID };
