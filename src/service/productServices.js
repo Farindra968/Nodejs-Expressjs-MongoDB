@@ -1,11 +1,15 @@
 // Database related work
-import fs from "fs";
 import Product from "../modules/product.js";
 
 // Get all product data
 const getAllProduct = async () => {
   return await Product.find();
 };
+
+// Get Product Category List
+const getProductCategoryList = async () => {
+  return await Product.distinct("category");
+}
 
 // Get Product By Category
 const getProductCategoryItems = async (categoryItems) => {
@@ -16,7 +20,6 @@ const getProductCategoryItems = async (categoryItems) => {
 const getProductBrandItems = async (brandItems) => {
   return await Product.find({brand: brandItems});
 };
-
 
 //Get Single Product Data
 const getProductbyID = async (id) => {
@@ -52,4 +55,4 @@ const updateProduct = async (id, data) => {
 
 
 
-export default { getAllProduct, getProductCategoryItems, getProductBrandItems, getProductbyID, addProduct, deleteProductbyId, updateProduct };
+export default { getAllProduct, getProductCategoryList, getProductCategoryItems, getProductBrandItems, getProductbyID, addProduct, deleteProductbyId, updateProduct };

@@ -19,7 +19,15 @@ const getAllProduct = async (req, res) => {
   }
 };
 
-
+// Method : Get Product Categoty List
+const getProductCategoryList = async (req, res) => {
+  try {
+    const categories = await productServices.getProductCategoryList();
+    res.json(categories)
+  } catch (error) {
+    res.status(statusCode || 500).send(error.message)
+  }
+}
 
 // Method Get Product Category
 const getProductCategoryItems = async (req, res) => {
@@ -143,6 +151,7 @@ const updateProductbyID = async (req, res) => {
 
 export {
   getAllProduct,
+  getProductCategoryList,
   getProductCategoryItems,
   getProductBrandItems,
   getProductbyId,
