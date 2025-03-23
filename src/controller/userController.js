@@ -19,12 +19,19 @@ const getAllUser = async(req, res) => {
 // Get User By ID 
 const getUserByID = async (req, res) => {
   const id = req.params.id;
+  const loggInUser = req.user;
   // try catch for handeling error
   try {
     const user = await userServices.getUserByID(id);
 
     if (!user) { return res.status(404).send("user not found."); }
     // Using userDataFormatter to format the user data to avoid sending password
+
+     // Check if the user is not an admin and the user is not the same as the logged in user
+     if (loggInUser.id != user.id && !user.role.includes(MERCHET_ROLE)) {
+      return res.status(401).send("You are not allowed to update this product.");
+    };
+    
     const formatedUser = userDataFormatter(user)
 
     console.log(formatedUser)
@@ -82,12 +89,19 @@ const createMerchantUser = async (req, res) => {
 // Update  User
 const updateUser = async (req, res) => {
   const id = req.params.id;
+  const loggedInUser = req.user;
   try {
 
-    const data = await userServices.updateUser(id, req.body);
-    res.json(data);
+    const user = await userServices.updateUser(id, req.body);
+
+    // user can be update by admin or the user itself
+    if (loggedInUser.id != user.id && !loggedInUser.role.includes(ADMIN_ROLE)) {
+      return res.status(401).send("You are not allowed to update this user");
+    }
+
+    res.json(user);
   } catch (error) {
-    res.status(error.statusCode || 500).send(error.message);
+    res.status( error.statusCode ||500).send(error.message);
   }
 };
 

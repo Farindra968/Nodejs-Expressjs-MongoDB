@@ -12,8 +12,8 @@ router.get('/:id', authMiddlewares, roleBasedAuth(MERCHET_ROLE), getUserByID)
 
 router.post('/merchant', authMiddlewares, roleBasedAuth(ADMIN_ROLE), createMerchantUser)
 
-router.put('/:id', authMiddlewares, roleBasedAuth(ADMIN_ROLE), updateUser)
+router.put('/:id', authMiddlewares, updateUser)
 
-router.delete('/:id', authMiddlewares, roleBasedAuth(ADMIN_ROLE), deteleUser)
+router.delete('/:id', authMiddlewares, deteleUser)
 
 export default router;
