@@ -16,6 +16,17 @@ const getAllUser = async(req, res) => {
   }
 }
 
+// Get All Customer
+const getAllCustomer = async (req, res) => {
+  try {
+    const user = await userServices.getAllCustomer();
+    const formatUserData = user.map((user) => userDataFormatter(user))
+    res.json(formatUserData)
+  } catch (error) {
+    res.status(statusCode || 500).send(error.message)
+  }
+};
+
 // Get User By ID 
 const getUserByID = async (req, res) => {
   const id = req.params.id;
@@ -117,4 +128,4 @@ const deteleUser = async (req, res) => {
   }
 }
 
-export  { createMerchantUser, updateUser, getAllUser, getUserByID, deteleUser };
+export  { createMerchantUser, updateUser, getAllUser, getAllCustomer, getUserByID, deteleUser };

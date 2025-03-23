@@ -8,6 +8,11 @@ const getAllUser = async () => {
 }
 
 
+// Get All Customer
+const getAllCustomer = async () => {
+    return await Users.find({role: [USER_ROLE]})
+}
+
 // Get User by ID
 const getUserByID = async (id) => {
     return  await Users.findById(id)
@@ -48,4 +53,4 @@ const deleteUser = async (id) => {
     return await Users.findByIdAndDelete(id)
 }
 
-export default {getAllUser, createMerchantUser, updateUser, deleteUser, getUserByID };
+export default {getAllUser, getAllCustomer, createMerchantUser, updateUser, deleteUser, getUserByID };
