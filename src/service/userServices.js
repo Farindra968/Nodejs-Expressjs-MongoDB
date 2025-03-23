@@ -15,7 +15,7 @@ const getAllCustomer = async () => {
 
 // Get All Merchant
 const getAllMerchant = async () => {
-    return await Users.find({role: [MERCHET_ROLE]})
+    return await Users.find({role: [USER_ROLE, MERCHET_ROLE]})
 }
 
 // Get User by ID
@@ -32,7 +32,7 @@ const createMerchantUser = async (data) => {
         email: data.email,
         password: hassPassword,
         address: data.address,
-        role: [MERCHET_ROLE]
+        role: [USER_ROLE, MERCHET_ROLE]
     });
 
     return user;
