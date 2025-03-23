@@ -7,20 +7,16 @@ const getAllProduct = async () => {
   return await Product.find();
 };
 
-// Get Product Category
+// Get Product By Category
 const getProductCategoryItems = async (categoryItems) => {
   return await Product.find({category: categoryItems});
 };
 
-// Get Product Category
+// Get Product By Brand
 const getProductBrandItems = async (brandItems) => {
   return await Product.find({brand: brandItems});
 };
 
-// Get Product Brand
-// const getProductBrand = async () => {
-//   return await Product.find().distinct("brand");
-// };
 
 //Get Single Product Data
 const getProductbyID = async (id) => {
