@@ -7,6 +7,21 @@ const getAllProduct = async () => {
   return await Product.find();
 };
 
+// Get Product Category
+const getProductCategoryItems = async (categoryItems) => {
+  return await Product.find({category: categoryItems});
+};
+
+// Get Product Category
+const getProductBrandItems = async (brandItems) => {
+  return await Product.find({brand: brandItems});
+};
+
+// Get Product Brand
+// const getProductBrand = async () => {
+//   return await Product.find().distinct("brand");
+// };
+
 //Get Single Product Data
 const getProductbyID = async (id) => {
   console.log(id);
@@ -39,4 +54,6 @@ const updateProduct = async (id, data) => {
   })
 }
 
-export default { getAllProduct, getProductbyID, addProduct, deleteProductbyId, updateProduct };
+
+
+export default { getAllProduct, getProductCategoryItems, getProductBrandItems, getProductbyID, addProduct, deleteProductbyId, updateProduct };

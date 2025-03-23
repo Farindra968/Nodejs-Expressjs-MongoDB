@@ -19,6 +19,39 @@ const getAllProduct = async (req, res) => {
   }
 };
 
+
+
+// Method Get Product Category
+const getProductCategoryItems = async (req, res) => {
+  // try catch for handeling error
+  const { categoryItems } = req.params;
+  try {
+    const product = await productServices.getProductCategoryItems(categoryItems);
+
+    // formating the product data
+    const productFormat = product.map((product)=> productDataFormatter(product));
+      
+    res.json(productFormat);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
+const getProductBrandItems = async (req, res) => {
+  // try catch for handeling error
+  const { brandItems } = req.params;
+  try {
+    const product = await productServices.getProductBrandItems(brandItems);
+
+    // formating the product data
+    const productFormat = product.map((product)=> productDataFormatter(product));
+      
+    res.json(productFormat);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 // [2]
 // Method Get Product By ID
 const getProductbyId = async (req, res) => {
@@ -110,6 +143,8 @@ const updateProductbyID = async (req, res) => {
 
 export {
   getAllProduct,
+  getProductCategoryItems,
+  getProductBrandItems,
   getProductbyId,
   postProduct,
   deleteProductByID,
