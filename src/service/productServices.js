@@ -3,11 +3,35 @@ import Product from "../modules/product.js";
 
 // Get all product data
 const getAllProduct = async (query) => {
-  /// Sort = Asc : 1 = price start from 0 , DES: -1 = price start from higher
-  const sort = JSON.parse(query.sort || "{}")
-  const limit = query.limit
-  const offsets = query.offsets
-  return await Product.find().sort(sort).limit(limit).skip(offsets);
+
+  const sort = JSON.parse(query.sort || "{}") // filtering product by sort
+  const limit = query.limit // filtering product by limit
+  const offsets = query.offsets // filtering product by offsets
+  const filter = {} 
+
+  console.log(query)
+  const { name, category, brand } = query;
+
+  // filtering product by name
+  if (name) filter.name = { $regex: name, $options: "i" }
+  
+  // filtering product by Multiple category items e.g: [Smartphone, Watch ]
+  if (category) {
+    const categoriesItems = category.split(",")
+    filter.category = {
+      $in: categoriesItems
+    }
+  }
+
+  // filtering product by Multiple brand items e.g: [Apple, Samsung ]
+  if (brand) {
+    const brandItems = brand.split(",")
+    filter.brand = {
+      $in: brandItems
+    }
+  }
+  
+  return await Product.find(filter).sort(sort).limit(limit).skip(offsets);
 };
 
 // Get Product Category List
