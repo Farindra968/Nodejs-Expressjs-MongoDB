@@ -2,8 +2,12 @@
 import Product from "../modules/product.js";
 
 // Get all product data
-const getAllProduct = async () => {
-  return await Product.find();
+const getAllProduct = async (query) => {
+  /// Sort = Asc : 1 = price start from 0 , DES: -1 = price start from higher
+  const sort = JSON.parse(query.sort || "{}")
+  const limit = query.limit
+  const offsets = query.offsets
+  return await Product.find().sort(sort).limit(limit).skip(offsets);
 };
 
 // Get Product Category List

@@ -8,7 +8,7 @@ import productDataFormatter from "../helpers/productDataFormatter.js";
 const getAllProduct = async (req, res) => {
   // try catch for handeling error
   try {
-    const product = await productServices.getAllProduct();
+    const product = await productServices.getAllProduct(req.query);
 
     // formating the product data
     const productFormat = product.map((product)=> productDataFormatter(product));
