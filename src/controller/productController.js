@@ -29,6 +29,17 @@ const getProductCategoryList = async (req, res) => {
   }
 }
 
+// Method Get Product Brand List
+const getProductBrandList =async (req, res)=> {
+  // try catch for handeling eror
+  try {
+    const brandList = await productServices.getProductBrandList();
+    res.json(brandList)
+  } catch (error) {
+    res.status(statusCode || 500).send(error.message)
+  }
+}
+
 // Method Get Product Category
 const getProductCategoryItems = async (req, res) => {
   // try catch for handeling error
@@ -152,6 +163,7 @@ const updateProductbyID = async (req, res) => {
 export {
   getAllProduct,
   getProductCategoryList,
+  getProductBrandList,
   getProductCategoryItems,
   getProductBrandItems,
   getProductbyId,

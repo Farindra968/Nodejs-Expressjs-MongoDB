@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteProductByID, getAllProduct, getProductBrandItems, getProductbyId, getProductCategoryItems, getProductCategoryList, postProduct, updateProductbyID } from '../controller/productController.js';
+import { deleteProductByID, getAllProduct, getProductBrandList, getProductBrandItems, getProductbyId, getProductCategoryItems, getProductCategoryList, postProduct, updateProductbyID } from '../controller/productController.js';
 import authMiddlewares from '../middlewares/authMiddlewares.js';
 import roleBasedAuth from '../middlewares/roleBasedAuth.js';
 import { ADMIN_ROLE, MERCHET_ROLE } from '../constant/role.js';
@@ -15,6 +15,9 @@ router.get('/category', getProductCategoryList)
 
 // Method: Get [Get Product by Category]
 router.get('/category/:categoryItems', getProductCategoryItems)
+
+// Method: Get [Get Product Brand List]
+router.get('/brand', getProductBrandList)
 
 // Method: Get [Get Product by Brand]
 router.get('/brand/:brandItems', getProductBrandItems)

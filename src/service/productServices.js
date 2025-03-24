@@ -11,6 +11,12 @@ const getProductCategoryList = async () => {
   return await Product.distinct("category");
 }
 
+// Get Product Brand LIst 
+const getProductBrandList = async ()=> {
+  const brandList = await Product.distinct("brand");
+  return brandList
+}
+
 // Get Product By Category
 const getProductCategoryItems = async (categoryItems) => {
   return await Product.find({category: categoryItems});
@@ -55,4 +61,4 @@ const updateProduct = async (id, data) => {
 
 
 
-export default { getAllProduct, getProductCategoryList, getProductCategoryItems, getProductBrandItems, getProductbyID, addProduct, deleteProductbyId, updateProduct };
+export default { getAllProduct, getProductCategoryList, getProductCategoryItems, getProductBrandList, getProductBrandItems, getProductbyID, addProduct, deleteProductbyId, updateProduct };
