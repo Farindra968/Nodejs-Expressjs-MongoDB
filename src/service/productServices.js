@@ -18,17 +18,13 @@ const getAllProduct = async (query) => {
   // filtering product by Multiple category items e.g: [Smartphone, Watch ]
   if (category) {
     const categoriesItems = category.split(",")
-    filter.category = {
-      $in: categoriesItems
-    }
+    filter.category = { $in: categoriesItems }
   }
 
   // filtering product by Multiple brand items e.g: [Apple, Samsung ]
   if (brand) {
     const brandItems = brand.split(",")
-    filter.brand = {
-      $in: brandItems
-    }
+    filter.brand = { $in: brandItems }
   }
   
   return await Product.find(filter).sort(sort).limit(limit).skip(offsets);
