@@ -3,14 +3,14 @@ import Product from "../modules/product.js";
 
 // Get all product data
 const getAllProduct = async (query) => {
-
+  // filtering 
   const sort = JSON.parse(query.sort || "{}") // filtering product by sort
   const limit = query.limit // filtering product by limit
   const offsets = query.offsets // filtering product by offsets
   const filter = {} 
 
   console.log(query)
-  const { name, category, brand } = query;
+  const { name, category, brand, min, max } = query;
 
   // filtering product by name
   if (name) filter.name = { $regex: name, $options: "i" }
@@ -26,6 +26,13 @@ const getAllProduct = async (query) => {
     const brandItems = brand.split(",")
     filter.brand = { $in: brandItems }
   }
+
+  // filtering product by price min and max
+  if (min) filter.price = { $gte: parseFloat(min) }
+  if (max) filter.price = { 
+    ...filter.price, // without replacing min parice
+    $lte: parseFloat(max)
+   };
   
   return await Product.find(filter).sort(sort).limit(limit).skip(offsets);
 };
