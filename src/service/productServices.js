@@ -58,6 +58,11 @@ const getProductBrandItems = async (brandItems) => {
   return await Product.find({brand: brandItems});
 };
 
+// Get product by Merchant 
+const getProductOfMerchant = async (merchant) => {
+  return await Product.find({createdBy: merchant})
+}
+
 //Get Single Product Data
 const getProductbyID = async (id) => {
   console.log(id);
@@ -92,4 +97,4 @@ const updateProduct = async (id, data) => {
 
 
 
-export default { getAllProduct, getProductCategoryList, getProductCategoryItems, getProductBrandList, getProductBrandItems, getProductbyID, addProduct, deleteProductbyId, updateProduct };
+export default { getAllProduct, getProductCategoryList, getProductCategoryItems, getProductBrandList, getProductBrandItems, getProductOfMerchant, getProductbyID, addProduct, deleteProductbyId, updateProduct };

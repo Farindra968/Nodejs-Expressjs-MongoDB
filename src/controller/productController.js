@@ -71,6 +71,19 @@ const getProductBrandItems = async (req, res) => {
   }
 }
 
+const getProductOfMerchant = async (req, res) => {
+  const { merchant } = req.params;
+  // try catch for handeling error
+  try {
+    const data = productServices.getProductOfMerchant(merchant);
+    // formating the product data
+    const productFormat = (await data).map((product) => productDataFormatter(product));
+    res.json(productFormat)
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
+
 // [2]
 // Method Get Product By ID
 const getProductbyId = async (req, res) => {
@@ -166,6 +179,7 @@ export {
   getProductBrandList,
   getProductCategoryItems,
   getProductBrandItems,
+  getProductOfMerchant,
   getProductbyId,
   postProduct,
   deleteProductByID,
