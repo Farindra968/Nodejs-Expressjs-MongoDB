@@ -5,15 +5,15 @@ import userRoute from './routes/userRoute.js'
 import authRouter from './routes/authRoutes.js'
 import bodyParser from 'body-parser';
 import connectDB from './config/database.js';
+import configCloudinary from './config/cloudinary.js';
 
 configDotenv();
 
 const app = express();
 
-
-
 // connection mongose database
 connectDB();
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -23,7 +23,8 @@ app.use(bodyParser.json())
 // importing port from .env file
 const port = process.env.PORT;
 
-// simple middlewares 
+// connection with CLOUDINARY 
+configCloudinary();
 
 app.get('/', (req, res) => {
     res.json({
