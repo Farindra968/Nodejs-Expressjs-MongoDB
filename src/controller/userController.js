@@ -1,29 +1,28 @@
 import { PASSWORD_REGEX } from "../constant/regex.js";
 import userServices from "../service/userServices.js";
-import userDataFormatter from '../helpers/userDataFormatter.js'
+import userDataFormatter from "../helpers/userDataFormatter.js";
 import { jsonToken } from "../utils/jwtToken.js";
 import { ADMIN_ROLE, MERCHET_ROLE } from "../constant/role.js";
 
-
 //Get All User
-const getAllUser = async(req, res) => {
+const getAllUser = async (req, res) => {
   try {
     const user = await userServices.getAllUser();
-    const formatUserData = user.map((user) => userDataFormatter(user))
+    const formatUserData = user.map((user) => userDataFormatter(user));
     res.json(formatUserData);
   } catch (error) {
-    res.status(statusCode || 500).send(error.message)
+    res.status(statusCode || 500).send(error.message);
   }
-}
+};
 
 // Get All Customer
 const getAllCustomer = async (req, res) => {
   try {
     const user = await userServices.getAllCustomer();
-    const formatUserData = user.map((user) => userDataFormatter(user))
-    res.json(formatUserData)
+    const formatUserData = user.map((user) => userDataFormatter(user));
+    res.json(formatUserData);
   } catch (error) {
-    res.status(statusCode || 500).send(error.message)
+    res.status(statusCode || 500).send(error.message);
   }
 };
 
@@ -32,14 +31,14 @@ const getAllMerchant = async (req, res) => {
   // try catch for handeling error
   try {
     const user = await userServices.getAllMerchant();
-    const formatedUserUser = user.map((user) => userDataFormatter(user))
-    res.json(formatedUserUser)
-  }catch(error){
-    res.status(500).send(error.message)
+    const formatedUserUser = user.map((user) => userDataFormatter(user));
+    res.json(formatedUserUser);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
-}
+};
 
-// Get User By ID 
+// Get User By ID
 const getUserByID = async (req, res) => {
   const id = req.params.id;
   const loggInUser = req.user;
@@ -47,22 +46,26 @@ const getUserByID = async (req, res) => {
   try {
     const user = await userServices.getUserByID(id);
 
-    if (!user) { return res.status(404).send("user not found."); }
+    if (!user) {
+      return res.status(404).send("user not found.");
+    }
     // Using userDataFormatter to format the user data to avoid sending password
 
-     // Check if the user is not an admin and the user is not the same as the logged in user
-     if (loggInUser.id != user.id && !user.role.includes(MERCHET_ROLE)) {
-      return res.status(401).send("You are not allowed to update this product.");
-    };
-    
-    const formatedUser = userDataFormatter(user)
+    // Check if the user is not an admin and the user is not the same as the logged in user
+    if (loggInUser.id != user.id && !user.role.includes(MERCHET_ROLE)) {
+      return res
+        .status(401)
+        .send("You are not allowed to update this product.");
+    }
 
-    console.log(formatedUser)
+    const formatedUser = userDataFormatter(user);
+
+    console.log(formatedUser);
     res.send(formatedUser);
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
 
 // Create a new Merchant User
 const createMerchantUser = async (req, res) => {
@@ -114,7 +117,6 @@ const updateUser = async (req, res) => {
   const id = req.params.id;
   const loggedInUser = req.user;
   try {
-
     const user = await userServices.updateUser(id, req.body);
 
     // user can be update by admin or the user itself
@@ -124,7 +126,7 @@ const updateUser = async (req, res) => {
 
     res.json(user);
   } catch (error) {
-    res.status( error.statusCode ||500).send(error.message);
+    res.status(error.statusCode || 500).send(error.message);
   }
 };
 
@@ -134,10 +136,24 @@ const deteleUser = async (req, res) => {
 
   try {
     const user = await userServices.deleteUser(id);
-    res.send("User Deleted Successfully")
+    res.send("User Deleted Successfully");
   } catch (error) {
-    res.status(statusCode || 200).send("User Deleted Successfully")
+    res.status(statusCode || 200).send("User Deleted Successfully");
   }
-}
+};
 
-export  { createMerchantUser, updateUser, getAllUser, getAllCustomer, getAllMerchant, getUserByID, deteleUser };
+// upload profile image
+const uploadProdileimg = async (req, res) => {
+  return res.send("File Uploaded");
+};
+
+export {
+  createMerchantUser,
+  updateUser,
+  getAllUser,
+  getAllCustomer,
+  getAllMerchant,
+  getUserByID,
+  deteleUser,
+  uploadProdileimg,
+};
