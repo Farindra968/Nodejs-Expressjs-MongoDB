@@ -56,7 +56,8 @@ const deleteUser = async (id) => {
 };
 
 // Upload Profile image
-const uploadProdileimg = async () => {
+const uploadProfileimg = async (file) => {
+  
   console.log("Image Uploaded");
 };
 
@@ -68,5 +69,5 @@ export default {
   updateUser,
   deleteUser,
   getUserByID,
-  uploadProdileimg,
+  uploadProfileimg,
 };

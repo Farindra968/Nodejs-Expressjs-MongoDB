@@ -6,13 +6,25 @@ import authRouter from './routes/authRoutes.js'
 import bodyParser from 'body-parser';
 import connectDB from './config/database.js';
 import configCloudinary from './config/cloudinary.js';
+import multer from 'multer';
 
 configDotenv();
 
 const app = express();
 
+// importing port from .env file
+const port = process.env.PORT;
+
 // connection mongose database
 connectDB();
+
+// connection with CLOUDINARY 
+configCloudinary();
+
+// adding multer
+const upload = multer({
+    storage: multer.memoryStorage()
+})
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -20,11 +32,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-// importing port from .env file
-const port = process.env.PORT;
 
-// connection with CLOUDINARY 
-configCloudinary();
+
 
 app.get('/', (req, res) => {
     res.json({
@@ -39,7 +48,7 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoute)
 
 /// 'api/users - User
-app.use('/api/users', userRoute)
+app.use('/api/users', upload.single("image"), userRoute)
 
 // 'api/auth/login
 app.use('/api/auth/', authRouter)

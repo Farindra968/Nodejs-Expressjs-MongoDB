@@ -3,6 +3,7 @@ import userServices from "../service/userServices.js";
 import userDataFormatter from "../helpers/userDataFormatter.js";
 import { jsonToken } from "../utils/jwtToken.js";
 import { ADMIN_ROLE, MERCHET_ROLE } from "../constant/role.js";
+import { v2 as cloudinary } from 'cloudinary';
 
 //Get All User
 const getAllUser = async (req, res) => {
@@ -143,8 +144,17 @@ const deteleUser = async (req, res) => {
 };
 
 // upload profile image
-const uploadProdileimg = async (req, res) => {
-  return res.send("File Uploaded");
+const uploadProfileimg = async (req, res) => {
+  const file = req.file;
+  console.log(file.buffer)
+    
+    // Upload an image
+    cloudinary.uploader.upload_stream({
+      folder:"backend"
+    }, (error, data) => {
+      if (error) return console.log(error)
+      console.log(data)
+    }).end(file.buffer)
 };
 
 export {
@@ -155,5 +165,5 @@ export {
   getAllMerchant,
   getUserByID,
   deteleUser,
-  uploadProdileimg,
+  uploadProfileimg,
 };

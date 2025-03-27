@@ -10,7 +10,7 @@ import {
   getAllUser,
   getUserByID,
   updateUser,
-  uploadProdileimg,
+  uploadProfileimg,
 } from "../controller/userController.js";
 
 const router = express.Router();
@@ -51,6 +51,6 @@ router.put("/:id", authMiddlewares, updateUser);
 // Delete User
 router.delete("/:id", authMiddlewares, deteleUser);
 
-router.put("/:id/profile", uploadProdileimg);
+router.put("/:id/profile", uploadProfileimg);
 
 export default router;
