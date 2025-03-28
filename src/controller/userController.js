@@ -154,8 +154,11 @@ const uploadProfileimg = async (req, res) => {
 
       res.json(userDataFormatter(data))
     } catch (error) {
-      res.status(500).send(error.message)
+     return res.status(500).send(error.message)
     }
+
+  res.send("Updated")
+  
 
 };
 

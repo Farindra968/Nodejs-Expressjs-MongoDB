@@ -19,8 +19,10 @@ const login = async (req, res) => {
 
     const formateData = userDataFormatter(data);
 
+
     //jwt token;
     const jwttoken = jsonToken(formateData);
+    console.log(jwttoken);
 
     //
 
