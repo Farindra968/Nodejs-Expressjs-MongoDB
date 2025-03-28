@@ -51,6 +51,6 @@ router.put("/:id", authMiddlewares, updateUser);
 // Delete User
 router.delete("/:id", authMiddlewares, deteleUser);
 
-router.put("/:id/profile", uploadProfileimg);
+router.put("/profile", authMiddlewares, uploadProfileimg);
 
 export default router;

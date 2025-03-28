@@ -3,7 +3,8 @@ import userServices from "../service/userServices.js";
 import userDataFormatter from "../helpers/userDataFormatter.js";
 import { jsonToken } from "../utils/jwtToken.js";
 import { ADMIN_ROLE, MERCHET_ROLE } from "../constant/role.js";
-import { v2 as cloudinary } from 'cloudinary';
+import uploadFile from "../utils/file.js";
+
 
 //Get All User
 const getAllUser = async (req, res) => {
@@ -146,15 +147,15 @@ const deteleUser = async (req, res) => {
 // upload profile image
 const uploadProfileimg = async (req, res) => {
   const file = req.file;
-  console.log(file.buffer)
-    
-    // Upload an image
-    cloudinary.uploader.upload_stream({
-      folder:"backend"
-    }, (error, data) => {
-      if (error) return console.log(error)
-      console.log(data)
-    }).end(file.buffer)
+  const userId = req.user.id;
+  
+    try {
+      const userProfile = await userServices.uploadProfileimg(userId, file)
+      res.json(userProfile)
+    } catch (error) {
+      res.status(500).send(error.message)
+    }
+
 };
 
 export {

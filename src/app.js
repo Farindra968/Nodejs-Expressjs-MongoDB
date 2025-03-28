@@ -12,19 +12,20 @@ configDotenv();
 
 const app = express();
 
-// importing port from .env file
-const port = process.env.PORT;
+// adding multer
+const upload = multer({storage: multer.memoryStorage()})
 
-// connection mongose database
+// connection mongoDB database
 connectDB();
 
 // connection with CLOUDINARY 
-configCloudinary();
+configCloudinary(
+    console.log("Connected Cloudinary")
+);
 
-// adding multer
-const upload = multer({
-    storage: multer.memoryStorage()
-})
+// importing port from .env file
+const port = process.env.PORT;
+
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
