@@ -1,21 +1,18 @@
 import cloudinary from "cloudinary";
 
-const uploadFile = async (file) => {
-  return await new Promise((resolve) => {
+const uploadFiles = async (file) => {
+  const result= await new Promise((resolve) => {
     cloudinary.uploader
         .upload_stream(
-            (error, uploadResult) => {
+            (error, data) => {
         if (error) {
           return console.log(error);
         }
-        return resolve(uploadResult);
+        return resolve(console.log(data));
       })
       .end(file.buffer);
-  }).then((uploadResult) => {
-    console.log(
-      `Buffer upload_stream wth promise success - ${uploadResult.public_id}`
-    );
-  });
+  })
+  return result;
 };
 
-export default uploadFile;
+export default uploadFiles;
