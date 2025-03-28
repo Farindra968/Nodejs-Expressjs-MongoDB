@@ -148,10 +148,11 @@ const deteleUser = async (req, res) => {
 const uploadProfileimg = async (req, res) => {
   const file = req.file;
   const userId = req.user.id;
-  
+
     try {
-      const userProfile = await userServices.uploadProfileimg(userId, file)
-      res.json(userProfile)
+      const data = await userServices.uploadProfileimg(userId, file)
+
+      res.json(userDataFormatter(data))
     } catch (error) {
       res.status(500).send(error.message)
     }

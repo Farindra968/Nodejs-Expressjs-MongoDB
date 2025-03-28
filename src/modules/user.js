@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  profileImage: String,
+  profileImageUrl: String,
   phone: {
     type: Number,
     unique: [true, "Phone Number Already Exist"],
