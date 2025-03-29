@@ -7,7 +7,8 @@ const authMiddlewares = (req, res, next) => {
     const authToken = cookie.split("=")[1];
   verifyJwtToken(authToken)
     .then((data) => {
-        req.user = data;
+      req.user = data;
+      console.log(req.user)
       next();
     })
     .catch(() => {

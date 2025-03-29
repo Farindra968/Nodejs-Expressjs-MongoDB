@@ -1,7 +1,7 @@
 import Users from "../modules/user.js";
 import { USER_ROLE, MERCHET_ROLE } from "../constant/role.js";
 import bcrypt from "bcryptjs";
-import uploadFiles from "../utils/file.js";
+import uploadFile from "../utils/file.js"
 
 // Get all User
 const getAllUser = async () => {
@@ -58,18 +58,16 @@ const deleteUser = async (id) => {
 
 // Upload Profile image
 const uploadProfileimg = async (userId, file) => {
-  const uploadFile = await uploadFiles(file);
-  console.log(uploadFiles(file))
-  
-  const user = await Users.findByIdAndUpdate(
-    userId,
+  const uploadedFiles = await uploadFile([file]);
+
+  return await Users.findByIdAndUpdate(
+    {_id:userId},
     {
-      profileImageUrl: uploadFile?.url
+      profileImageUrl: uploadedFiles[0]?.url,
     },
     { new: true }
   );
-  console.log(user)
-  return user;
+
 };
 
 export default {

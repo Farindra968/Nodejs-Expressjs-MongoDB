@@ -22,7 +22,6 @@ const login = async (req, res) => {
 
     //jwt token;
     const jwttoken = jsonToken(formateData);
-    console.log(jwttoken);
 
     //
 
