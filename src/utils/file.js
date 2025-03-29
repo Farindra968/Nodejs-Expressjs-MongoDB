@@ -2,15 +2,12 @@ import cloudinary from "cloudinary";
 
 const uploadFiles = async (file) => {
   const result= await new Promise((resolve) => {
-    cloudinary.uploader
-        .upload_stream(
-            (error, data) => {
-        if (error) {
-          return console.log(error);
-        }
-        return resolve(console.log(data));
-      })
-      .end(file.buffer);
+    cloudinary.uploader.upload_stream(
+      {folder: "backend"},
+      (error, uploadResult) => {
+        if(error) {return reject(error)}
+        return resolve(uploadResult);
+    }).end(file.buffer);
   })
   return result;
 };

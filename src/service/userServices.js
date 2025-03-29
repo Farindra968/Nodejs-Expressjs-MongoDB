@@ -57,10 +57,10 @@ const deleteUser = async (id) => {
 };
 
 // Upload Profile image
-const uploadProfileimg = async () => {
-  console.log(userId)
+const uploadProfileimg = async (userId, file) => {
   const uploadFile = await uploadFiles(file);
-
+  console.log(uploadFiles(file))
+  
   const user = await Users.findByIdAndUpdate(
     userId,
     {
@@ -68,8 +68,8 @@ const uploadProfileimg = async () => {
     },
     { new: true }
   );
-
-
+  console.log(user)
+  return user;
 };
 
 export default {
