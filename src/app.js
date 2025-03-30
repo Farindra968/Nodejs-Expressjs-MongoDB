@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 })
 
 /// 'api/products - Product 
-app.use('/api/products', productRoute)
+app.use('/api/products', upload.array("images", 6), productRoute)
 
 /// 'api/users - User
 app.use('/api/users', upload.single("image"), userRoute)

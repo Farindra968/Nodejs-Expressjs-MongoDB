@@ -109,12 +109,13 @@ const getProductbyId = async (req, res) => {
 const postProduct = async (req, res) => {
   // extracting user id from req.user (jwt token: authMiddlewares)
   const userID = req.user.id;
-  console.log(userID);
+  const files = req.files;
+  const input = req.body
   
   // try catch for handeling error
   try {
     // Calls the addProduct function from productServices with request body data
-    const data = await productServices.addProduct(req.body, userID);
+    const data = await productServices.addProduct(input, files, userID);
 
     // formating the product data
     const productFormat = productDataFormatter(data);

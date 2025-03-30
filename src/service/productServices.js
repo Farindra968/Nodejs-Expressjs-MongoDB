@@ -1,5 +1,6 @@
 // Database related work
 import Product from "../modules/product.js";
+import uploadFile from "../utils/file.js"
 
 // Get all product data
 const getAllProduct = async (query) => {
@@ -70,15 +71,10 @@ const getProductbyID = async (id) => {
 };
 
 /// Add product (Post Method)
-const addProduct = async (data, userID) => {
+const addProduct = async (data, files, userID) => {
+  const uploadFiles = uploadFile(files)
   const productData = await Product.create({
-    name: data.name,
-    price: data.price,
-    category: data.category,
-    stock: data.stock,
-    brand: data.brand,
-    images: data.images,
-    createdBy: userID,
+    ...data, createdBy: userID, productImages: (await uploadFiles).map((item)=>(item.url))
   });
   return productData;
 };
