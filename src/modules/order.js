@@ -37,6 +37,23 @@ const OrderSchema = new mongoose.Schema({
     default: PENDING_ORDER,
     enum: [PENDING_ORDER, COMPLETE_ORDER, SHIFT_ORDER, DELiVERED_ORDER],
   },
+  address: {
+    city: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    street: {
+      type: String,
+    },
+    postal_code: {
+      type: String,
+    },
+    phone: {
+      type: Number,
+    },
+  },
   createdAt: {
     type: String,
     default: Date.now(),
