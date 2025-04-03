@@ -3,6 +3,7 @@ import express from 'express';
 import productRoute from './routes/productRoute.js';
 import userRoute from './routes/userRoute.js'
 import authRouter from './routes/authRoutes.js'
+import orderRouter from './routes/orderRoutes.js'
 import bodyParser from 'body-parser';
 import connectDB from './config/database.js';
 import configCloudinary from './config/cloudinary.js';
@@ -51,6 +52,9 @@ app.use('/api/users', upload.single("image"), userRoute)
 
 // 'api/auth/login
 app.use('/api/auth/', authRouter)
+
+// 'api/
+app.use("/api/order", orderRouter)
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
