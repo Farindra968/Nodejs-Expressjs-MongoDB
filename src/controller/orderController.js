@@ -1,4 +1,4 @@
-import orderServices from "../service/orderServices"
+import orderServices from "../service/orderServices.js"
 
 const getAllOrders = async(req, res) => {
     // try catch
