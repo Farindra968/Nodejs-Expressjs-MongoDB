@@ -7,7 +7,7 @@ import {
 } from "../constant/orderStatus.js";
 
 const OrderSchema = new mongoose.Schema({
-  orderNumder: {
+  orderNumber: {
     type: String,
   },
   userId: {
