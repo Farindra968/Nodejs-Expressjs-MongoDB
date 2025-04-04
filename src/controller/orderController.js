@@ -26,8 +26,8 @@ const createOrder = async (req, res) => {
     if (!input.orderItems[0]?.product) {
       return res.status(422).send("Products is required");
     }
-    if (!input.totalPrice) {
-      return res.send(422).send("Total Price is Required");
+    if (!input.totaPrice) {
+      return res.status(422).send("Total Price is Required");
     }
 
     // if there is no input usr then user logging user id
@@ -40,7 +40,7 @@ const createOrder = async (req, res) => {
       
       // if login user did't have address then throw error
       if (!user.address) {
-        return res.send(422).send("Shipping Address is required");
+        return res.status(422).send("Shipping Address is required");
       }
       // if user did't have shipping address then user login user address
       input.shippingaddress = user.address;
@@ -49,7 +49,7 @@ const createOrder = async (req, res) => {
     const data = await orderServices.createOrder(input);
     res.json(data);
   } catch (error) {
-    res.status(400).send(error.message)
+    res.status(error.statusCode || 500).send(error.message)
   }
 };
 
