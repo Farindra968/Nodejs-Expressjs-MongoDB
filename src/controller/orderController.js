@@ -20,10 +20,10 @@ const createOrder = async (req, res) => {
     if (!input.orderNumber) {
       return res.status(422).send("Order Number is required");
     }
-    if (input.orderItems.length == 0) {
-      return res.status(422).send("Order Number is Required");
+    if (!input.orderItems || input.orderItems?.length <= 0) {
+      return res.status(422).send("Order Items is Required");
     }
-    if (!input.orderItems[0].product) {
+    if (!input.orderItems[0]?.product) {
       return res.status(422).send("Products is required");
     }
     if (!input.totalPrice) {
@@ -49,7 +49,7 @@ const createOrder = async (req, res) => {
     const data = await orderServices.createOrder(input);
     res.json(data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(400).send(error.message)
   }
 };
 
