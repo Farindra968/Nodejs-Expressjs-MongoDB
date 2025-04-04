@@ -37,7 +37,7 @@ const OrderSchema = new mongoose.Schema({
     default: PENDING_ORDER,
     enum: [PENDING_ORDER, COMPLETE_ORDER, SHIFT_ORDER, DELiVERED_ORDER],
   },
-  address: {
+  shippingaddress: {
     city: {
       type: String,
     },
