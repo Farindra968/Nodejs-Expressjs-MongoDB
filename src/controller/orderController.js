@@ -37,7 +37,6 @@ const createOrder = async (req, res) => {
 
     // if input user did have shipping address
     if (!input.shippingaddress) {
-      
       // if login user did't have address then throw error
       if (!user.address) {
         return res.status(422).send("Shipping Address is required");
@@ -49,7 +48,7 @@ const createOrder = async (req, res) => {
     const data = await orderServices.createOrder(input);
     res.json(data);
   } catch (error) {
-    res.status(statusCode || 500).send(error.message)
+    res.status(statusCode || 500).send(error.message);
   }
 };
 
@@ -61,25 +60,23 @@ const getOrderByUser = async (req, res) => {
     if (!data) {
       return res.status(404).send("Order not found");
     }
-    res.json(data)
+    res.json(data);
   } catch (error) {
-    res.status(500).send(error.message)
-    
+    res.status(500).send(error.message);
   }
-}
-
+};
 
 // Get Order By ID or Order Tracking
 const getOrderByOrderNumber = async (req, res) => {
-  const {orderId} = req.params;
+  const { orderId } = req.params;
   try {
     const data = await orderServices.getOrderByOrderNumber(orderId);
-    if (!data) { 
-      res.status(400).send("Order is not found or invalid order number")
+    if (!data) {
+      res.status(400).send("Order is not found or invalid order number");
     }
-    res.json(data)
+    res.json(data);
   } catch (error) {
-    res.status(500).send(error.message)
+    res.status(500).send(error.message);
   }
-}
+};
 export { getAllOrders, createOrder, getOrderByUser, getOrderByOrderNumber };

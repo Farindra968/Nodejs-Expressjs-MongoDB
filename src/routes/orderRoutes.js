@@ -9,7 +9,7 @@ router.get("/", authMiddleware, roleBasedAuth(ADMIN_ROLE), getAllOrders);
 
 router.get('/user', authMiddleware, getOrderByUser)
 
-router.get("/:orderId", authMiddleware, getOrderByOrderNumber)
+router.get("/user/:orderId", authMiddleware, getOrderByOrderNumber)
 
 router.post("/", authMiddleware, createOrder)
 
