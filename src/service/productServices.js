@@ -80,7 +80,7 @@ const addProduct = async (data, files, userID) => {
     ...data,
     createdBy: userID,
     productImages: uploadedFiles?.map((item) => item?.url),
-  });
+  });  
 };
 
 /// Update Product (put method)
