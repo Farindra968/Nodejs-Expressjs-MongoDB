@@ -9,11 +9,13 @@ import {
 const OrderSchema = new mongoose.Schema({
   orderNumber: {
     type: String,
+    required: true,
+    unique: true,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "user",
+    ref: "User",
   },
   orderItems: [
     {

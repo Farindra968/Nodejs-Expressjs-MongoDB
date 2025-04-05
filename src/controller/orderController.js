@@ -20,7 +20,7 @@ const createOrder = async (req, res) => {
     if (!input.orderNumber) {
       return res.status(422).send("Order Number is required");
     }
-    if (!input.orderItems || input.orderItems?.length <= 0) {
+    if (!input.orderItems || input.orderItems?.length == 0) {
       return res.status(422).send("Order Items is Required");
     }
     if (!input.orderItems[0]?.product) {
@@ -31,8 +31,8 @@ const createOrder = async (req, res) => {
     }
 
     // if there is no input usr then user logging user id
-    if (!input.user) {
-      input.user = user.id;
+    if (!input.userId) {
+      input.userId = user.id;
     }
 
     // if input user did have shipping address
@@ -49,8 +49,37 @@ const createOrder = async (req, res) => {
     const data = await orderServices.createOrder(input);
     res.json(data);
   } catch (error) {
-    res.status(error.statusCode || 500).send(error.message)
+    res.status(statusCode || 500).send(error.message)
   }
 };
 
-export { getAllOrders, createOrder };
+// Get Order By User
+const getOrderByUser = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const data = await orderServices.getOrderByUser(userId);
+    if (!data) {
+      return res.status(404).send("Order not found");
+    }
+    res.json(data)
+  } catch (error) {
+    res.status(500).send(error.message)
+    
+  }
+}
+
+
+// Get Order By ID or Order Tracking
+const getOrderByOrderNumber = async (req, res) => {
+  const {orderId} = req.params;
+  try {
+    const data = await orderServices.getOrderByOrderNumber(orderId);
+    if (!data) { 
+      res.status(400).send("Order is not found or invalid order number")
+    }
+    res.json(data)
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
+export { getAllOrders, createOrder, getOrderByUser, getOrderByOrderNumber };
