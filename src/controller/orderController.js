@@ -4,7 +4,7 @@ import orderServices from "../service/orderServices.js";
 const getAllOrders = async (req, res) => {
   // try catch
   try {
-    const data = await orderServices.getAllOrders();
+    const data = await orderServices.getAllOrders(req.query);
     res.json(data);
   } catch (error) {
     res.status(500).send(error);
@@ -55,8 +55,9 @@ const createOrder = async (req, res) => {
 // Get Order By User
 const getOrderByUser = async (req, res) => {
   const userId = req.user.id;
+  const query = req.query
   try {
-    const data = await orderServices.getOrderByUser(userId);
+    const data = await orderServices.getOrderByUser(userId,query);
     if (!data) {
       return res.status(404).send("Order not found");
     }

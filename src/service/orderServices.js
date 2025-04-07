@@ -1,15 +1,16 @@
+import { PENDING_ORDER } from "../constant/orderStatus.js";
 import Order from "../modules/order.js";
 
 // Get All Order
-const getAllOrders = async () => {
-  return await Order.find()
+const getAllOrders = async (query) => {
+  return await Order.find({OrderStatus: query.OrderStatus || PENDING_ORDER}).sort({createdAt:-1})
     .populate("userId", "name email phone")
     .populate("orderItems.product", "name price productImages");
 };
 
 // Get Order By User
-const getOrderByUser = async (userId) => {
-  return await Order.find({ userId: userId })
+const getOrderByUser = async (userId, query) => {
+  return await Order.find({ userId: userId, OrderStatus: query.OrderStatus || PENDING_ORDER })
     .populate("userId", "name email phone")
     .populate("orderItems.product", "name price productImages");
 };
