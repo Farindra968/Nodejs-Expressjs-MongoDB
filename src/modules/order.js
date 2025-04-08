@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import {
   COMPLETE_ORDER,
-  DELiVERED_ORDER,
+  DELIVERED_ORDER,
   PENDING_ORDER,
   SHIFT_ORDER,
 } from "../constant/orderStatus.js";
@@ -34,10 +34,10 @@ const OrderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  OrderStatus: {
+  status: {
     type: String,
     default: PENDING_ORDER,
-    enum: [PENDING_ORDER, COMPLETE_ORDER, SHIFT_ORDER, DELiVERED_ORDER],
+    enum: [PENDING_ORDER, COMPLETE_ORDER, SHIFT_ORDER, DELIVERED_ORDER, ],
   },
   shippingaddress: {
     city: {

@@ -3,31 +3,61 @@ import Order from "../modules/order.js";
 
 // Get All Order
 const getAllOrders = async (query) => {
-  return await Order.find({OrderStatus: query.OrderStatus || PENDING_ORDER}).sort({createdAt:-1})
+  return await Order.find({ status: query.status || PENDING_ORDER })
+    .sort({ createdAt: -1 })
     .populate("userId", "name email phone")
     .populate("orderItems.product", "name price productImages");
 };
 
-// Get Order By User
+// Get All Order By User [Only their order]
 const getOrderByUser = async (userId, query) => {
-  return await Order.find({ userId: userId, OrderStatus: query.OrderStatus || PENDING_ORDER })
+  const order = await Order.find({
+    userId: userId,
+    status: query.status || PENDING_ORDER,
+  })
     .populate("userId", "name email phone")
     .populate("orderItems.product", "name price productImages");
+  
+
+  return order;
 };
 
-
-// Get Order By ID or Order Tracking 
-const getOrderByOrderNumber = async (orderId) => {
-    return await Order.findOne({ orderNumber: orderId })
+// Get Order By ID or 
+const getOrderByID = async (id) => {
+  const order =  await Order.findById({_id:id})
     .populate("userId", "name email phone")
     .populate("orderItems.product", "name price productImages");
-}
+    if (!order) {
+      throw {
+        statusCode: 404,
+        message: "Order not found.",
+      };
+  }
+  return order;
+};
 
 //Create order
 const createOrder = async (data) => {
+
   return await Order.create(data);
 };
 
 
 
-export default { getAllOrders, createOrder, getOrderByUser, getOrderByOrderNumber };
+// Update order Status
+const updateOrderStatus = async (id, status) => {
+  
+  const order = await Order.findByIdAndUpdate(
+    id, {status} ,
+    { new: true }
+  );
+  return order;
+};
+
+export default {
+  getAllOrders,
+  createOrder,
+  getOrderByUser,
+  getOrderByID,
+  updateOrderStatus,
+};

@@ -48,16 +48,16 @@ const createOrder = async (req, res) => {
     const data = await orderServices.createOrder(input);
     res.json(data);
   } catch (error) {
-    res.status(statusCode || 500).send(error.message);
+    res.status(error.statusCode || 500).send(error.message);
   }
 };
 
 // Get Order By User
 const getOrderByUser = async (req, res) => {
   const userId = req.user.id;
-  const query = req.query
+  const query = req.query;
   try {
-    const data = await orderServices.getOrderByUser(userId,query);
+    const data = await orderServices.getOrderByUser(userId, query);
     if (!data) {
       return res.status(404).send("Order not found");
     }
@@ -68,16 +68,37 @@ const getOrderByUser = async (req, res) => {
 };
 
 // Get Order By ID or Order Tracking
-const getOrderByOrderNumber = async (req, res) => {
-  const { orderId } = req.params;
+const getOrderByID = async (req, res) => {
+  const { id } = req.params;
   try {
-    const data = await orderServices.getOrderByOrderNumber(orderId);
-    if (!data) {
-      res.status(400).send("Order is not found or invalid order number");
-    }
+    const data = await orderServices.getOrderByID(id);
+
     res.json(data);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(error.statusCode || 500).send(error.message);
   }
 };
-export { getAllOrders, createOrder, getOrderByUser, getOrderByOrderNumber };
+
+// update Order
+const updateOrderStatus = async (req, res) => {
+  const id = req.params.id;
+  const input = req.body
+  try {
+    // checking the order id
+    await orderServices.getOrderByID(id)
+    if (!input.status)
+      // if order is not found
+      return res.status(422).send("Order Status is required");
+    const order =  await orderServices.updateOrderStatus(id, input.status);
+    res.json(order);
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+export {
+  getAllOrders,
+  createOrder,
+  getOrderByUser,
+  getOrderByID,
+  updateOrderStatus,
+};
