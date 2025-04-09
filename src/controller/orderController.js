@@ -19,9 +19,7 @@ const createOrder = async (req, res) => {
 
   try {
     // validation of order while creating order
-    if (!input.orderNumber) {
-      return res.status(422).send("Order Number is required");
-    }
+
     if (!input.orderItems || input.orderItems?.length == 0) {
       return res.status(422).send("Order Items is Required");
     }

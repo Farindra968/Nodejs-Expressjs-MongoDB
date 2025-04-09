@@ -38,7 +38,7 @@ const getOrderByID = async (id) => {
 
 //Create order
 const createOrder = async (data) => {
-
+  data.orderNumber = crypto.randomUUID(); // generating Order Number random
   return await Order.create(data);
 };
 
