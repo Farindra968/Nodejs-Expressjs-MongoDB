@@ -4,7 +4,8 @@ import orderServices from "../service/orderServices.js";
 const getAllOrders = async (req, res) => {
   // try catch
   try {
-    const data = await orderServices.getAllOrders(req.query);
+    //fetching all orders data
+    const data = await orderServices.getAllOrders(req.query); // passing req.query for order status filter 
     res.json(data);
   } catch (error) {
     res.status(500).send(error);
@@ -17,6 +18,7 @@ const createOrder = async (req, res) => {
   const user = req.user;
 
   try {
+    // validation of order while creating order
     if (!input.orderNumber) {
       return res.status(422).send("Order Number is required");
     }
@@ -30,7 +32,7 @@ const createOrder = async (req, res) => {
       return res.status(422).send("Total Price is Required");
     }
 
-    // if there is no input usr then user logging user id
+    // if there is no input user then use logging user id
     if (!input.userId) {
       input.userId = user.id;
     }
