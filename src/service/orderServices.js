@@ -54,10 +54,18 @@ const updateOrderStatus = async (id, status) => {
   return order;
 };
 
+
+
+// Delete Order 
+const deleteOrder = async (id) => {
+  return await Order.findByIdAndDelete(id)
+}
+
 export default {
   getAllOrders,
   createOrder,
   getOrderByUser,
   getOrderByID,
   updateOrderStatus,
+  deleteOrder
 };

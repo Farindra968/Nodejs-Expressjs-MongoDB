@@ -95,10 +95,27 @@ const updateOrderStatus = async (req, res) => {
     res.status(error.statusCode || 500).send(error.message);
   }
 };
+
+// delete order 
+const deleteOrder = async (req, res) => {
+  const { id } = req.params
+  // try catch for handling error
+  try {
+    const data = await orderServices.deleteOrder(id);
+    if (!data) {
+      throw new Error("Order not found");
+    }
+    res.send("Order Delete Successfully")
+  } catch (error) {
+    return res.status(error.statusCode || 500).send(error.message)
+  }
+
+}
 export {
   getAllOrders,
   createOrder,
   getOrderByUser,
   getOrderByID,
   updateOrderStatus,
+  deleteOrder
 };
