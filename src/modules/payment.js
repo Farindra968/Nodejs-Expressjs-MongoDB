@@ -23,9 +23,10 @@ const PaymentSchema = mongoose.Schema({
     },
     OrderId: {
         type: mongoose.Types.ObjectId,
-        ref: "Order"
-
-    }
+        ref: "Order",
+        required: true,
+    },
+    
 })
 
 const model = mongoose.model("Payment", PaymentSchema)
