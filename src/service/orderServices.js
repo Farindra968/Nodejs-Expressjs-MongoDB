@@ -63,9 +63,9 @@ const checkOutOrder = async ({id}, data) => {
     return_url: data.return_url,
     website_url: data.website_url,
     amount: order.totaPrice,
-    purchase_order_id: order.id,
-    purchase_order_name: order.orderNumber,
-    customer_info: order.userId,
+    orderId: order.id,
+    orderName: order.orderNumber,
+    customerInfo: order.userId,
   });
 };
 
