@@ -1,5 +1,6 @@
 import { PENDING_ORDER } from "../constant/orderStatus.js";
 import Order from "../modules/order.js";
+import payViaKhalti from "../utils/khalti.js";
 
 // Get All Order
 const getAllOrders = async (query) => {
@@ -17,21 +18,20 @@ const getOrderByUser = async (userId, query) => {
   })
     .populate("userId", "name email phone")
     .populate("orderItems.product", "name price productImages");
-  
 
   return order;
 };
 
-// Get Order By ID or 
+// Get Order By ID or
 const getOrderByID = async (id) => {
-  const order =  await Order.findById({_id:id})
+  const order = await Order.findById({ _id: id })
     .populate("userId", "name email phone")
     .populate("orderItems.product", "name price productImages");
-    if (!order) {
-      throw {
-        statusCode: 404,
-        message: "Order not found.",
-      };
+  if (!order) {
+    throw {
+      statusCode: 404,
+      message: "Order not found.",
+    };
   }
   return order;
 };
@@ -42,24 +42,37 @@ const createOrder = async (data) => {
   return await Order.create(data);
 };
 
-
-
 // Update order Status
 const updateOrderStatus = async (id, status) => {
-  
-  const order = await Order.findByIdAndUpdate(
-    id, {status} ,
-    { new: true }
-  );
+  const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
   return order;
 };
 
+// Khalti Payment checkout Order
+const checkOutOrder = async ({id}, data) => {
+  const order = await Order.findById(id)
+    .populate("userId", "name email phone")
+    .populate("orderItems.product", "name price productImages");
+  
+  // if order not found
+  if (!order) {
+    throw new Error("Order not found");
+  }
 
+  return await payViaKhalti({
+    return_url: data.return_url,
+    website_url: data.website_url,
+    amount: order.totaPrice,
+    purchase_order_id: order.id,
+    purchase_order_name: order.orderNumber,
+    customer_info: order.userId,
+  });
+};
 
-// Delete Order 
+// Delete Order
 const deleteOrder = async (id) => {
-  return await Order.findByIdAndDelete(id)
-}
+  return await Order.findByIdAndDelete(id);
+};
 
 export default {
   getAllOrders,
@@ -67,5 +80,6 @@ export default {
   getOrderByUser,
   getOrderByID,
   updateOrderStatus,
-  deleteOrder
+  checkOutOrder,
+  deleteOrder,
 };

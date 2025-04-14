@@ -111,11 +111,24 @@ const deleteOrder = async (req, res) => {
   }
 
 }
+
+// checkout order
+const checkOutOrder = async (req, res) => {
+  const id = req.params;
+  const input = req.body;
+  try {
+    const order = await orderServices.checkOutOrder(id, input)
+    res.json(order)
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message)
+  }
+}
 export {
   getAllOrders,
   createOrder,
   getOrderByUser,
   getOrderByID,
   updateOrderStatus,
-  deleteOrder
+  deleteOrder,
+  checkOutOrder,
 };
