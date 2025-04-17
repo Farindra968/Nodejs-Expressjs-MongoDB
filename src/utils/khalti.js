@@ -1,9 +1,11 @@
 import axios from "axios";
 
 const payViaKhalti = async (data) => {
+  // destructuring the data
   const { return_url, website_url, amount, orderId, orderName, customerInfo } =
     data;
 
+    // valiation of the destructuring data
     if (!return_url) throw { message: "Return URL is required" };
     if (!website_url) throw { message: "Website URL is required" };
     if (!amount) throw { message: "Amount is required" };

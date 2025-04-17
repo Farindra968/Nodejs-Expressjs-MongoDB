@@ -14,7 +14,7 @@ const getAllOrders = async (query) => {
 const getOrderByUser = async (userId, query) => {
   const order = await Order.find({
     userId: userId,
-    status: query.status || PENDING_ORDER,
+    status: query.status || PENDING_ORDER, // filtering the  status || default status is pending
   })
     .populate("userId", "name email phone")
     .populate("orderItems.product", "name price productImages");
